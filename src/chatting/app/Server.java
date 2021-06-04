@@ -116,7 +116,7 @@ public class Server extends JFrame implements ActionListener{
 			dout.writeUTF(out);
 			t1.setText("");
 			
-			
+			System.out.println("Hi I am Aman");
 			}catch(Exception a){}
 	
 	}
