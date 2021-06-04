@@ -155,7 +155,8 @@ public void actionPerformed(ActionEvent ae) {
 		
 		try{
 			
-			s = new Socket("127.0.0.1",5001);
+			//Rajan Added
+			s = new Socket("192.168.1.4",5001);
 			
 			din = new DataInputStream(s.getInputStream());
 			dout = new DataOutputStream(s.getOutputStream());
