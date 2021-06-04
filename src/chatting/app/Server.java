@@ -19,6 +19,7 @@ public class Server extends JFrame implements ActionListener{
 	static DataInputStream din;
 	static DataOutputStream dout;
 
+	Boolean typing;
 	Server(){
 		p1 = new JPanel();
 		p1.setLayout(null);
@@ -79,10 +80,37 @@ public class Server extends JFrame implements ActionListener{
 		l7.setBounds(110,35,100,20);
 		p1.add(l7);
 		
+		Timer t = new Timer(1,new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				if(!typing){
+					l7.setText("Active Now");
+				}
+			}
+		});
+		
+		t.setInitialDelay(1000);
+		
 		t1 = new JTextField();
 		t1.setBounds(5,655,310,40);
 		t1.setFont(new Font("SAN_SERIF",Font.PLAIN,16));
 		add(t1);
+		
+		t1.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent ke){
+				l7.setText("typing...");
+				t.stop();
+				typing = true;
+			}
+			
+			public void keyReleased(KeyEvent ke){
+				typing = false;
+				
+				if(!t.isRunning())
+				 t.start();
+			}
+			
+			
+		});
 		
 		b1 = new JButton("Send");
 		b1.setBackground(new Color(7,94,84));
@@ -115,15 +143,14 @@ public class Server extends JFrame implements ActionListener{
 			a1.setText(a1.getText() + "\n\t\t\t" + out);
 			dout.writeUTF(out);
 			t1.setText("");
-			
-			System.out.println("Hi I am Aman");
+		
 			}catch(Exception a){}
 	
 	}
 	
 	
 	public static void main(String[] args) {
-		new Server().setVisible(true);
+		new Server();
 		
 		String msginput = "";
 		try{

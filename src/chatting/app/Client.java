@@ -20,6 +20,7 @@ public class Client extends JFrame implements ActionListener{
 	static DataInputStream din;
 	static DataOutputStream dout;
 
+	Boolean typing;
 	Client(){
 		p1 = new JPanel();
 		p1.setBackground(new Color(7,94,84));
@@ -84,6 +85,33 @@ public class Client extends JFrame implements ActionListener{
 		t1.setFont(new Font("SAN_SERIF",Font.PLAIN,16));
 		add(t1);
 		
+		Timer t = new Timer(1,new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				if(!typing){
+					l7.setText("Active Now");
+				}                                               //Status Change
+			}
+		});
+		                                                  
+		t.setInitialDelay(1000);                           
+		
+		t1.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent ke){
+				l7.setText("typing...");
+				t.stop();
+				typing = true;
+			}
+			                                              //     Active Now to typing and vice versa
+			public void keyReleased(KeyEvent ke){
+				typing = false;
+				
+				if(!t.isRunning())
+				 t.start();
+			}
+			
+			
+		});
+		
 		b1 = new JButton("Send");
 		b1.setBackground(new Color(7,94,84));
 		b1.setForeground(Color.WHITE);
@@ -122,7 +150,7 @@ public void actionPerformed(ActionEvent ae) {
 		}
 
 	public static void main(String[] args) {
-		new Client().setVisible(true);
+		new Client();
 		
 		
 		try{
